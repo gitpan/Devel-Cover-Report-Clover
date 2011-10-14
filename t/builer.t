@@ -1,7 +1,11 @@
 #!perl
 
 BEGIN {
-    use Test::MockTime qw(set_fixed_time restore_time );
+    $MOCKTIME = 0;
+    eval {
+        require Test::MockTime;
+        $MOCKTIME = 1;
+    };
 }
 
 use Test::MockObject::Extends;
@@ -15,6 +19,12 @@ use testcover;
 my $EMPTY_DB = testcover::run('Empty');
 
 my @test = (
+    sub {
+        my $t        = "accept_criteria - array exists and has items in it";
+        my @criteria = Devel::Cover::Report::Clover::Builder->accept_criteria();
+
+        ok( scalar @criteria > 0, $t );
+    },
     sub {
         my $t = "template_dir - returns valid folder";
 
@@ -50,27 +60,31 @@ my @test = (
         is( $b->project->name, $expect, $t );
     },
     sub {
-        my $t = "report - top level structure looks good";
+    SKIP: {
+            skip "Test::MockTime is not installed", 1 unless $MOCKTIME;
 
-        my $b = BUILDER( { name => 'Project Name', db => $EMPTY_DB } );
+            my $t = "report - top level structure looks good";
 
-        my $project = $b->project;
-        $project = Test::MockObject::Extends->new($project);
-        $project->mock( 'report', sub { return {} } );
-        $b->project($project);
+            my $b = BUILDER( { name => 'Project Name', db => $EMPTY_DB } );
 
-        set_fixed_time(123456789);
-        my $report = $b->report();
-        my $expect = {
-            generated_by => 'Devel::Cover::Report::Clover',
-            version      => $Devel::Cover::Report::Clover::VERSION,
-            generated    => time(),
-            project      => $project->report(),
+            my $project = $b->project;
+            $project = Test::MockObject::Extends->new($project);
+            $project->mock( 'report', sub { return {} } );
+            $b->project($project);
 
-        };
-        restore_time();
+            Test::MockTime::set_fixed_time(123456789);
+            my $report = $b->report();
+            my $expect = {
+                generated_by => 'Devel::Cover::Report::Clover',
+                version      => $Devel::Cover::Report::Clover::VERSION,
+                generated    => time(),
+                project      => $project->report(),
 
-        is_deeply( $report, $expect, $t );
+            };
+            Test::MockTime::restore_time();
+
+            is_deeply( $report, $expect, $t );
+        }
 
     },
 

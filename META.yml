@@ -1,6 +1,6 @@
 ---
 name: Devel-Cover-Report-Clover
-version: 0.10
+version: 0.11
 author:
   - 'David Bartle <captindave@gmail.com>'
 abstract: Backend for Clover reporting of coverage statistics
@@ -8,17 +8,19 @@ license: perl
 resources:
   license: http://dev.perl.org/licenses/
 requires:
-  Class::Accessor::Fast: 0
+  Class::Accessor: 0
   Devel::Cover: 0
+  HTML::Parser: 0
   Template: 0
 build_requires:
   Test::MockObject: 0
-  Test::MockTime: 0
   Test::More: 0
+recommends:
+  Test::MockTime: 0
 provides:
   Devel::Cover::Report::Clover:
     file: lib/Devel/Cover/Report/Clover.pm
-    version: 0.10
+    version: 0.11
   Devel::Cover::Report::Clover::Builder:
     file: lib/Devel/Cover/Report/Clover/Builder.pm
   Devel::Cover::Report::Clover::Class:
@@ -37,6 +39,10 @@ provides:
     file: lib/Devel/Cover/Report/Clover/Project.pm
   Devel::Cover::Report::Clover::Reportable:
     file: lib/Devel/Cover/Report/Clover/Reportable.pm
+no_index:
+  directory:
+    - cover_db_test
+    - t
 generated_by: Module::Build version 0.280801
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.2.html
