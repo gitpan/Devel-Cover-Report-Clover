@@ -3,7 +3,7 @@ package Devel::Cover::Report::Clover;
 use strict;
 use warnings;
 
-our $VERSION = "0.29";
+our $VERSION = "0.30";
 
 use Devel::Cover::Report::Clover::Builder;
 use Getopt::Long;
@@ -12,14 +12,11 @@ use Getopt::Long;
 sub report {
     my ( $pkg, $db, $options ) = @_;
 
-    my $report = Devel::Cover::Report::Clover::Builder->new( { db => $db } );
-    my $xml_string = $report->generate( output_file($options) );
+    my $report = builder( $db, $options );
+    my $outfile = output_file($options);
 
-    printf( "Writing clover output file to '%s'...\n", output_file($options) )
-        unless $options->{silent};
-    open( my $fh, '>', output_file($options) ) or die $!;
-    print {$fh} $xml_string;
-    close($fh);
+    printf( "Writing clover output file to '%s'...\n", $outfile ) unless $options->{silent};
+    $report->generate($outfile);
 
 }
 
@@ -45,6 +42,17 @@ sub output_file {
     my $out_file = $options->{option}{outputfile};
     my $out_path = sprintf( '%s/%s', $out_dir, $out_file );
     return $out_path;
+}
+
+sub builder {
+    my ( $db, $options ) = @_;
+    my $project_name = $options->{option}{projectname};
+    my $report       = Devel::Cover::Report::Clover::Builder->new(
+        {   db                         => $db,
+            name                       => $project_name,
+            include_condition_criteria => 1
+        }
+    );
 }
 
 1;

@@ -19,32 +19,12 @@ sub report {
 sub metrics {
     my ($self) = @_;
 
-    my $s = $self->summarize();
+    my $metrics = $self->SUPER::metrics();
+    $metrics->{packages} = scalar @{ $self->packages };
+    $metrics->{files}    = scalar @{ $self->files };
+    $metrics->{classes}  = scalar @{ $self->classes };
 
-    my $conditionals         = $s->{branch}->{total}   || 0;
-    my $conditionals_covered = $s->{branch}->{covered} || 0;
-    if ( $self->builder->include_condition_criteria ) {
-        $conditionals         += $s->{condition}->{total}   || 0;
-        $conditionals_covered += $s->{condition}->{covered} || 0;
-    }
-
-    my $metrics = {
-        packages => scalar @{ $self->packages },
-        files    => scalar @{ $self->files },
-        classes  => scalar @{ $self->classes() },
-
-        elements          => $s->{total}->{total}       || 0,
-        coveredelements   => $s->{total}->{covered}     || 0,
-        statements        => $s->{statement}->{total}   || 0,
-        coveredstatements => $s->{statement}->{covered} || 0,
-        complexity        => 0,
-        loc               => $self->loc(),
-        ncloc             => $self->ncloc(),
-        conditionals      => $conditionals,
-        coveredconditionals => $conditionals_covered,
-        methods             => $s->{subroutine}->{total} || 0,
-        coveredmethods      => $s->{subroutine}->{covered} || 0,
-    };
+    return $metrics;
 }
 
 sub classes {

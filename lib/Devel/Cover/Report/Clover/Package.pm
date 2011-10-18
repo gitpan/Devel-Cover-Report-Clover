@@ -34,6 +34,7 @@ sub files {
         my $classes = $frag_classes{$name};
         my $file    = Devel::Cover::Report::Clover::PackageFile->new(
             {   name    => $name,
+                builder => $self->builder,
                 classes => [@$classes]
             }
         );
@@ -47,31 +48,9 @@ sub files {
 sub metrics {
     my ($self) = @_;
 
-    my $s = $self->summarize();
-
-    my $conditionals         = $s->{branch}->{total}   || 0;
-    my $conditionals_covered = $s->{branch}->{covered} || 0;
-    if ( $self->builder->include_condition_criteria ) {
-        $conditionals         += $s->{condition}->{total}   || 0;
-        $conditionals_covered += $s->{condition}->{covered} || 0;
-    }
-
-    my $metrics = {
-        files   => scalar @{ $self->files },
-        classes => scalar @{ $self->classes() },
-
-        elements          => $s->{total}->{total}       || 0,
-        coveredelements   => $s->{total}->{covered}     || 0,
-        statements        => $s->{statement}->{total}   || 0,
-        coveredstatements => $s->{statement}->{covered} || 0,
-        complexity        => 0,
-        loc               => $self->loc(),
-        ncloc             => $self->ncloc(),
-        conditionals      => $conditionals,
-        coveredconditionals => $conditionals_covered,
-        methods             => $s->{subroutine}->{total} || 0,
-        coveredmethods      => $s->{subroutine}->{covered} || 0,
-    };
+    my $metrics = $self->SUPER::metrics();
+    $metrics->{files}   = scalar @{ $self->files };
+    $metrics->{classes} = scalar @{ $self->classes() };
 
     return $metrics;
 }
@@ -143,23 +122,9 @@ sub report {
 sub metrics {
     my ($self) = @_;
 
-    my $s = $self->summarize();
-
-    my $metrics = {
-        classes => scalar @{ $self->classes },
-
-        elements            => $s->{total}->{total}        || 0,
-        coveredelements     => $s->{total}->{covered}      || 0,
-        statements          => $s->{statement}->{total}    || 0,
-        coveredstatements   => $s->{statement}->{covered}  || 0,
-        complexity          => 0,
-        loc                 => $self->loc(),
-        ncloc               => $self->ncloc(),
-        conditionals        => $s->{branch}->{total}       || 0,
-        coveredconditionals => $s->{branch}->{covered}     || 0,
-        methods             => $s->{subroutine}->{total}   || 0,
-        coveredmethods      => $s->{subroutine}->{covered} || 0,
-    };
+    my $metrics = $self->SUPER::metrics();
+    $metrics->{classes} = scalar @{ $self->classes() };
+    return $metrics;
 }
 
 sub summarize {

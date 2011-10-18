@@ -26,31 +26,7 @@ sub report {
 
 sub metrics {
     my ($self) = @_;
-
-    my $s = $self->summarize();
-
-    my $conditionals         = $s->{branch}->{total}   || 0;
-    my $conditionals_covered = $s->{branch}->{covered} || 0;
-    if ( $self->builder->include_condition_criteria ) {
-        $conditionals         += $s->{condition}->{total}   || 0;
-        $conditionals_covered += $s->{condition}->{covered} || 0;
-    }
-
-    my $metrics = {
-        elements          => $s->{total}->{total}       || 0,
-        coveredelements   => $s->{total}->{covered}     || 0,
-        statements        => $s->{statement}->{total}   || 0,
-        coveredstatements => $s->{statement}->{covered} || 0,
-        complexity        => 0,
-        loc               => $self->loc(),
-        ncloc             => $self->ncloc(),
-        conditionals      => $conditionals,
-        coveredconditionals => $conditionals_covered,
-        methods             => $s->{subroutine}->{total} || 0,
-        coveredmethods      => $s->{subroutine}->{covered} || 0,
-    };
-
-    return $metrics;
+    return $self->SUPER::metrics();
 }
 
 sub loc {
