@@ -9,9 +9,8 @@ build_requires:
   Test::MockObject: 0
   Test::More: 0
 configure_requires:
-  Module::Build: 0.38
-dynamic_config: 1
-generated_by: 'Module::Build version 0.38, CPAN::Meta::Converter version 2.112150'
+  Module::Build: 0.36
+generated_by: 'Module::Build version 0.3603'
 license: perl
 meta-spec:
   url: http://module-build.sourceforge.net/META-spec-v1.4.html
@@ -24,34 +23,25 @@ no_index:
 provides:
   Devel::Cover::Report::Clover:
     file: lib/Devel/Cover/Report/Clover.pm
-    version: 0.31
+    version: 0.32
   Devel::Cover::Report::Clover::Builder:
     file: lib/Devel/Cover/Report/Clover/Builder.pm
-    version: 0
   Devel::Cover::Report::Clover::Class:
     file: lib/Devel/Cover/Report/Clover/Class.pm
-    version: 0
   Devel::Cover::Report::Clover::File:
     file: lib/Devel/Cover/Report/Clover/File.pm
-    version: 0
   Devel::Cover::Report::Clover::FileFragment:
     file: lib/Devel/Cover/Report/Clover/File.pm
-    version: 0
   Devel::Cover::Report::Clover::FileRegistry:
     file: lib/Devel/Cover/Report/Clover/FileRegistry.pm
-    version: 0
   Devel::Cover::Report::Clover::Package:
     file: lib/Devel/Cover/Report/Clover/Package.pm
-    version: 0
   Devel::Cover::Report::Clover::PackageFile:
     file: lib/Devel/Cover/Report/Clover/Package.pm
-    version: 0
   Devel::Cover::Report::Clover::Project:
     file: lib/Devel/Cover/Report/Clover/Project.pm
-    version: 0
   Devel::Cover::Report::Clover::Reportable:
     file: lib/Devel/Cover/Report/Clover/Reportable.pm
-    version: 0
 recommends:
   Test::MockTime: 0
 requires:
@@ -61,4 +51,4 @@ requires:
   Template: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.31
+version: 0.32
