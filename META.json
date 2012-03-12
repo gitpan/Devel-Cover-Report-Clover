@@ -53,7 +53,7 @@
    "provides" : {
       "Devel::Cover::Report::Clover" : {
          "file" : "lib/Devel/Cover/Report/Clover.pm",
-         "version" : "0.34_01"
+         "version" : "0.35"
       },
       "Devel::Cover::Report::Clover::Builder" : {
          "file" : "lib/Devel/Cover/Report/Clover/Builder.pm",
@@ -92,7 +92,7 @@
          "version" : 0
       }
    },
-   "release_status" : "testing",
+   "release_status" : "stable",
    "resources" : {
       "bugtracker" : {
          "web" : "http://rt.cpan.org/NoAuth/Bugs.html?Dist=Devel-Cover-Report-Clover"
@@ -105,5 +105,5 @@
          "url" : "https://github.com/captin411/devel-cover-report-clover.git"
       }
    },
-   "version" : "0.34_01"
+   "version" : "0.35"
 }

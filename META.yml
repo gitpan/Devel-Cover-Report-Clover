@@ -28,7 +28,7 @@ no_index:
 provides:
   Devel::Cover::Report::Clover:
     file: lib/Devel/Cover/Report/Clover.pm
-    version: 0.34_01
+    version: 0.35
   Devel::Cover::Report::Clover::Builder:
     file: lib/Devel/Cover/Report/Clover/Builder.pm
     version: 0
@@ -68,4 +68,4 @@ resources:
   homepage: https://github.com/captin411/devel-cover-report-clover
   license: http://dev.perl.org/licenses/
   repository: https://github.com/captin411/devel-cover-report-clover.git
-version: 0.34_01
+version: 0.35
