@@ -10,11 +10,15 @@ WriteMakefile
           'PREREQ_PM' => {
                            'Test::MockObject' => 0,
                            'Test::Exception' => 0,
+                           'FindBin' => 0,
+                           'File::Which' => '1.08',
                            'Class::Accessor' => 0,
                            'Template' => 0,
                            'TAP::Harness' => 0,
                            'Test::More' => 0,
+                           'List::Util' => 0,
                            'HTML::Parser' => 0,
+                           'File::Path' => '2.06',
                            'Devel::Cover' => 0
                          }
         )
